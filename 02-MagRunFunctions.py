@@ -943,7 +943,7 @@ def plotMagRun2PSN(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',noiseNu
 	figs.savefig(fname2+'.pdf', format = 'pdf');
 	figs.savefig(fname1+'.png');
 
-def plotMagRun3(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,direc='Y',bs = 1,fignum = 1, ver='v16', fsamp=20000., ds=1, fsampd=1000, trim=.01, HPF = 1, LPF = 80, fan=0, raw = 0, t0 = 0, dt = 10, showfig = 1,ZM=0):
+def plotMagRun3(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,direc='Y',bs = 1,fignum = 1, ver='v16', fsamp=1000., ds=0, fsampd=1000, trim=.01, HPF = 1, LPF = 80, fan=0, raw = 0, t0 = 0, dt = 10, showfig = 1,ZM=0):
 	'''Single Channel. Plots PSD, response curve, entire time series, and time series starting at x0 and ending at x0+dx. Applies bandpass filter from HPF to LPF, and notch filters at 60 Hz and 120 Hz. trim chops off a fraction of the data at each end of the original time series'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
@@ -987,7 +987,7 @@ def plotMagRun3(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,dir
 	#loads response function
 	dataResp = transpose(loadtxt(fRESP));
 	
-	#loads calibrated time series, chops off ends, and downsamples
+	#loads calibrated time series, chops off ends, and downsamples if required
 	dataTS = fromfile(ftser,dtype = '<d');
 	sz=size(dataTS);
 	chop=sz*trim
@@ -1014,15 +1014,15 @@ def plotMagRun3(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,dir
 
 	b60,a60 = butter(4,[59./Nyq,61./Nyq],btype='bandstop'); #60 Hz notch filter
 	b120,a120 = butter(2,[118./Nyq,122./Nyq],btype='bandstop'); #120 Hz notch filter 
-	bfan,afan = butter(2,[5.5/Nyq,6.5/Nyq],btype='bandstop'); #fan notch filter - no longer needed after fan was removed
 	bLP,aLP = butter(2,[HPF/Nyq, LPF/Nyq], btype = 'bandpass'); #bandpass filter for region of interest
 	
-
+	#applies filters to data
 	dataTSf = filtfilt(bLP,aLP,dataTS);
 	dataTSf = filtfilt(b120,a120,dataTSf);
 	dataTSf = filtfilt(b60,a60,dataTSf);
 	
 	if fan==1:
+		bfan,afan = butter(2,[5.5/Nyq,6.5/Nyq],btype='bandstop'); #fan notch filter - no longer needed after fan was removed
 		dataTSf = filtfilt(bfan,afan,dataTSf);
 
 	figure(fignum,figsize=(16,10))
