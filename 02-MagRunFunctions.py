@@ -110,7 +110,8 @@ def TwoLorentz(x, a,b,c,d):
 def OneSqrtLorentz(x, a,b):
 	return a*b/(x**2+b**2)**.5
 
-def plotMagRunPSN(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',noiseNum2='01',noiseNum3='02',Chan=1,direc='Y',ver='v16',fignum = 1,bs = 1,nLim=[0.,200.,.05,10000.],psn=1,Ipr = 100E-6,calib = 2E-6,cfit = 0,fitfunc=1,dispFig=1,ZM=0,leg=1,lbl1=0,lbl2=0,lbl3=0):
+def plotMagRunPSN(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',noiseNum2='01',noiseNum3='02',Chan=1,direc='Y',ver='v16',fignum = 1,bs = 1,nLim=[0.,200.,.05,10000.],psn=1,Ipr = 100E-6,calib = 2E-6,cfit = 0,fitfunc=1,dispFig=1,ZM=0,leg=1,lbl1=0,lbl2=0,lbl3=0):
+	'''Plots up to three noise runs from a single channel of a single run from the main magnetometer program. For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 
@@ -316,8 +317,8 @@ def plotMagRunPSN(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',noiseNum
 	fig.savefig(fname2+'.png');
 	return [freq,PS,dataResp[0],1E5*dataResp[1]];
 
-def plotMagRunZM(loc='WIMR',day='2016.10.01',runNum='00',noiseNum1='00',noiseNum2='01',noiseNum3='02',Chan=1,bs = 1,fignum=1,ver='v16',fmax=200,psn=1,calib=2E-6,Ipr=100E-6,leg=1,lbl1=0,lbl2=0,lbl3=0):
-	'''Plots the X and Y noise from a single channel Z-mode run, as well as the X and Y response'''
+def plotMagRunZM(loc='WIMR',day='2016.11.01',runNum='00',noiseNum1='00',noiseNum2='01',noiseNum3='02',Chan=1,bs = 1,fignum=1,ver='v16',fmax=200,psn=1,calib=2E-6,Ipr=100E-6,leg=1,lbl1=0,lbl2=0,lbl3=0):
+	'''Plots the X and Y noise from a single channel Z-mode run, as well as the X and Y response. For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 
@@ -469,8 +470,8 @@ def plotMagRunZM(loc='WIMR',day='2016.10.01',runNum='00',noiseNum1='00',noiseNum
 	fig.savefig(fname1+'.pdf', format = 'pdf');
 	fig.savefig(fname2+'.png');
 
-def plotMagRun5(loc='WIMR',day='2016.10.01',runNum='00',noiseNum1 = '00',noiseNum2 = '01', noiseNum3 = '02',Chan=1,bs = 2,fmax = 100,fignum = 1,ver = 'v16',leg=1,rScale=50,direc = 'Y'):
-	'''Plots noise, amplitude and phase response for a single run, single channel'''
+def plotMagRun5(loc='WIMR',day='2016.11.01',runNum='00',noiseNum1 = '00',noiseNum2 = '01', noiseNum3 = '02',Chan=1,bs = 2,fmax = 100,fignum = 1,ver = 'v16',leg=1,rScale=50,direc = 'Y'):
+	'''Plots noise, amplitude and phase response for a single run, single channel. For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 
@@ -556,7 +557,8 @@ def plotMagRun5(loc='WIMR',day='2016.10.01',runNum='00',noiseNum1 = '00',noiseNu
 	figs.savefig(fname2+'.pdf', format = 'pdf');
 	figs.savefig(fname1+'.png');
 
-def plotMagRun4PSN(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',noiseNum2='01',noiseNum3='02',bs=2,fmax=200,fignum=1,ver='v16',leg=1,direc = 'Y',psn=0,Ipr=[1E-4,1E-4,1E-4,1E-4],calib=[2E-6,1E-6,2E-6,2E-6],ZM=0,lbl=[0,0,0]):
+def plotMagRun4PSN(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',noiseNum2='01',noiseNum3='02',bs=2,fmax=200,fignum=1,ver='v16',leg=1,direc = 'Y',psn=0,Ipr=[1E-4,1E-4,1E-4,1E-4],calib=[2E-6,1E-6,2E-6,2E-6],ZM=0,lbl=[0,0,0]):
+	'''Plots four channels of data from the main program, up to three noise measurements. For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 
@@ -802,7 +804,8 @@ def plotMagRun4PSN(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',noiseNu
 	figs.savefig(fname2+'.pdf', format = 'pdf');
 	figs.savefig(fname1+'.png');
 	
-def plotMagRun2PSN(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',noiseNum2='01',noiseNum3='02',Channels=[1,2],bs=4,fmax=200,fignum=1,ver='v16',leg=1,direc = 'Y',psn=0,Ipr=[1E-4,1E-4],calib=[1E-6,1E-6]):
+def plotMagRun2PSN(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',noiseNum2='01',noiseNum3='02',Channels=[1,2],bs=4,fmax=200,fignum=1,ver='v16',leg=1,direc = 'Y',psn=0,Ipr=[1E-4,1E-4],calib=[1E-6,1E-6]):
+	'''Plots two channels of noise measurements. Use the Channels parameter to select the channels.  For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 
@@ -943,8 +946,8 @@ def plotMagRun2PSN(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',noiseNu
 	figs.savefig(fname2+'.pdf', format = 'pdf');
 	figs.savefig(fname1+'.png');
 
-def plotMagRun3(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,direc='Y',bs = 1,fignum = 1, ver='v16', fsamp=1000., ds=0, fsampd=1000, trim=.01, HPF = 1, LPF = 80, fan=0, raw = 0, t0 = 0, dt = 10, showfig = 1,ZM=0):
-	'''Single Channel. Plots PSD, response curve, entire time series, and time series starting at x0 and ending at x0+dx. Applies bandpass filter from HPF to LPF, and notch filters at 60 Hz and 120 Hz. trim chops off a fraction of the data at each end of the original time series'''
+def plotMagRun3(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',Chan=1,direc='Y',bs = 1,fignum = 1, ver='v16', fsamp=1000., ds=0, fsampd=1000, trim=.01, HPF = 1, LPF = 80, fan=0, raw = 0, t0 = 0, dt = 10, showfig = 1,ZM=0):
+	'''Single Channel. Plots PSD, response curve, entire time series, and time series starting at x0 and ending at x0+dx. Applies bandpass filter from HPF to LPF, and notch filters at 60 Hz and 120 Hz. trim chops off a fraction of the data at each end of the original time series.  For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	dayDir = analysispath+day
@@ -1082,7 +1085,8 @@ def plotMagRun3(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,dir
 	
 	return dataTS, dataTSf, dataTSRaw;
 	
-def get4ChanData(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',LPF = 80, HPF = 2,f120=120,f60=60, ver = 'v16'):
+def get4ChanData(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',LPF = 80, HPF = 2,f120=120,f60=60, ver = 'v16'):
+	'''Loads and filters four channels of data. For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	dayDir = analysispath+day
@@ -1145,7 +1149,8 @@ def get4ChanData(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',LPF = 80,
 	
 	return [dataTSf1,dataTSf2,dataTSf3,dataTSf4]
 
-def PlotTimeSeries(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,inv=0,ver='v16',leg=1,direc='Y',filt=0,HPF=1,LPF=80,fan=0,t0=0,tlen=1,ymax=0,fsamp=1000):
+def PlotTimeSeries(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',Chan=1,inv=0,ver='v16',leg=1,direc='Y',filt=0,HPF=1,LPF=80,fan=0,t0=0,tlen=1,ymax=0,fsamp=1000):
+	'''Plots time series of data.  For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	dayDir = analysispath+day
@@ -1205,7 +1210,7 @@ def PlotTimeSeries(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,
 	
 	grid();
 
-def PlotNTimeSeries(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=[1,2,3,4],inv=[0,0,0,0],bs=4,fignum=1,ver='v16',leg=1,direc='Y',LPF=80,HPF=1,fan=0,t0=0,tlen=1,ymax=0,fsamp=1000):
+def PlotNTimeSeries(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',Chan=[1,2,3,4],inv=[0,0,0,0],bs=4,fignum=1,ver='v16',leg=1,direc='Y',LPF=80,HPF=1,fan=0,t0=0,tlen=1,ymax=0,fsamp=1000):
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	dayDir = analysispath+day
@@ -1346,7 +1351,7 @@ def PlotNTimeSeries(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=[
 		
 	return dataTS1,dataTSf1
 
-def PlotNPSDs(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=[1,2,3,4],bs=4,fignum=1,ver='v16',leg=1,direc='Y',fmax=200):
+def PlotNPSDs(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',Chan=[1,2,3,4],bs=4,fignum=1,ver='v16',leg=1,direc='Y',fmax=200):
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	dayDir = analysispath+day
@@ -1444,7 +1449,7 @@ def magFilt(d1,fsamp=1000,fanfreq = 6.0, fanfilt = 0):
 	
 	return d1
 	
-def plotMagRunSlider(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=1,direc='Y',fsamp=1000.,fignum=1,ver='v16',Yscale=2000,dX=1000,lnw=1.5):
+def plotMagRunSlider(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',Chan=1,direc='Y',fsamp=1000.,fignum=1,ver='v16',Yscale=2000,dX=1000,lnw=1.5):
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	path = basepath +str(day) + '\\' + 'run_' + str(runNum);
@@ -1490,7 +1495,7 @@ def plotMagRunSlider(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',Chan=
 	sX.on_changed(update)
 	show()
 
-def plotMagRunSlider2(loc='WIMR',day='2016.10.01',runNum='00',noiseNum = '00',Chan=[1,2,3,4],direc='Y',Fsamp=1000., fignum = 1,ver = 'v16',Yscale=2000,dX = 1000,lw=1.5):
+def plotMagRunSlider2(loc='WIMR',day='2016.11.01',runNum='00',noiseNum = '00',Chan=[1,2,3,4],direc='Y',Fsamp=1000., fignum = 1,ver = 'v16',Yscale=2000,dX = 1000,lw=1.5):
 	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	path = basepath +str(day) + '\\' + 'run_' + str(runNum);
@@ -1622,7 +1627,7 @@ def plotMagRunSlider2(loc='WIMR',day='2016.10.01',runNum='00',noiseNum = '00',Ch
 		sX.on_changed(update)
 		show()
 		
-def getMagRunSlider4(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',bs = 2,notch = 0, ffreq = 6, fignum = 1,ver = 'v15',Yscale=2000,Grad=0,dX = 1000,lnw=1.5):
+def getMagRunSlider4(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',bs = 2,notch = 0, ffreq = 6, fignum = 1,ver = 'v15',Yscale=2000,Grad=0,dX = 1000,lnw=1.5):
     [basepath, analysispath] = getCompEnv(loc);
     basepath = basepath + ver + '\\';
     path = basepath +str(day) + '\\' + 'run_' + str(runNum);
@@ -1701,7 +1706,7 @@ def getMagRunSlider4(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',bs = 
     sX.on_changed(update)
     show()
 	
-def AmpPhaseCompare(loc='WIMR',day='2016.10.01',run='00',Chan=1,direc='Y',label='',ver='v16',fmax=200,radresp=0,calib=2E-6,Ipr=100E-6):
+def AmpPhaseCompare(loc='WIMR',day='2016.11.01',run='00',Chan=1,direc='Y',label='',ver='v16',fmax=200,radresp=0,calib=2E-6,Ipr=100E-6):
 	'''Plots amplitude and phase response for one run. Desgined to be "stackable": Run multiple fucntions sequentially and all will be plotted on same plot.'''
 	import time
 	today=time.strftime('%Y.%m.%d')
@@ -1745,8 +1750,8 @@ def AmpPhaseCompare(loc='WIMR',day='2016.10.01',run='00',Chan=1,direc='Y',label=
 	if label!='':
 		legend()
 
-def NoiseCompare(loc='WIMR',day='2016.10.01',run='00',noise='00',bs=1,Chan=1,direc='Y',label='',ver='v16',fmax=200,radresp=0,calib=2E-6,Ipr=100E-6,psn=0):
-	'''Plots response and noise (in fT/rHz) for one run. Desgined to be "stackable": Run multiple fucntions in one input box and all will be plotted on same plot.'''
+def NoiseCompare(loc='WIMR',day='2016.11.01',run='00',noise='00',bs=1,Chan=1,direc='Y',label='',ver='v16',fmax=200,radresp=0,calib=2E-6,Ipr=100E-6,psn=0):
+	'''Plots response and noise (in fT/rHz) for one run. Desgined to be "stackable": Run multiple fucntions in one input box and all will be plotted on same plot.  For the loc parameter, use 'WIMR' for data collected at WIMR and 'Chambo' for data collected at Chamberlin.'''
 	import time
 	today=time.strftime('%Y.%m.%d')
 	
