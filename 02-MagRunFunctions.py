@@ -161,14 +161,14 @@ def plotMagRunPSN(loc='WIMR',day='2016.11.01',runNum='00',noiseNum='00',noiseNum
 
 	if ZM==0:
 		if psn==1:
-			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc+'  (' + str(round(1E6*Ipr)) + ' $\mu$A per PD)';
+			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc+'  (' + str(round(1E6*Ipr)) + ' $\mu$A per PD)'+' ['+loc+']';
 		if psn==0:
-			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc;
+			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc+' ['+loc+']';
 	if ZM==1:
 		if psn==1:
-			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc+' [Z-mode] (' + str(round(1E6*Ipr)) + ' $\mu$A per PD)';
+			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc+' [Z-mode] (' + str(round(1E6*Ipr)) + ' $\mu$A per PD)'+' ['+loc+']';
 		if psn==0:
-			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc+' [Z-mode]';	
+			figTitle = str(day) + ' - ' + 'Run' + str(runNum)+' - '+'Noise'+str(noiseNum)+','+str(noiseNum2)+','+str(noiseNum3)+': Channel '+str(Chan)+direc+' [Z-mode]'+' ['+loc+']';	
 	
 	data = loadtxt(fPSD);
 	data = transpose(data);
