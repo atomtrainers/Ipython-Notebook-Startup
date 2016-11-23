@@ -99,8 +99,8 @@ def LaserScan2(date = '2016.10.01', laser = 'Probe', fnum=0, fignum = 1, gr='res
 	
 	return data0p,data1p,data2p,data3p,data4p;
 
-def LaserScan1Chan(date='2016.10.01',laser='Probe',fnum=0,Chan=1,curr=0,srscalib=100E-6,ymax=14,step=.2,lbl='-'):
-	'''Plots 1 channel data from the LaserScan VI. Designed to be "stackable". Call many instances in one notebook command line and the data will be shown on same plot. The curr flag converts voltage readings to currents using the gain on the SRS.'''
+def LaserScan1Chan(date='2016.10.01',laser='Probe',fnum=0,Chan=1,curr=0,srscalib=100E-6,ymax=14,step=.2,sc=1,lbl='-'):
+	'''Plots 1 channel data from the LaserScan VI. Designed to be "stackable". Call many instances in one notebook command line and the data will be shown on same plot. The curr flag converts voltage readings to currents using the gain on the SRS. The sc parameter allows for scaling.'''
 	if fnum<10:
 			fnum = '000'+str(fnum);
 	elif fnum<100:
@@ -127,7 +127,7 @@ def LaserScan1Chan(date='2016.10.01',laser='Probe',fnum=0,Chan=1,curr=0,srscalib
 	
 	matplotlib.rcParams['figure.figsize'] = (16.0,10.0)
 	
-	plot(detun,sig, linewidth = '3',label=lbl);
+	plot(detun,sc*sig, linewidth = '3',label=lbl);
 	xlim(xbot,xtop)
 	xticks(np.arange(xbot, xtop, step),fontsize=16)
 	xlabel('TEC Temp ($ \propto \Delta$) [kOhm]',fontsize=16); 

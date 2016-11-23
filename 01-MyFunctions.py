@@ -80,7 +80,7 @@ def getCurrentNoise(day, run, noiseSum,noisediff,calibSum,calibDiff,Chan = 3):
     ylabel('CMRR, dB');
     legend(loc=3)
     
-def get1ChanData(day,runNum,noiseNum,Chan = 1,LPF = 80, HPF = 2,f120=120,f60=60, ver = 'v16',calib = 0, lineNotch = 1,fan=0):
+def get1ChanData(day,runNum,noiseNum,ver = 'v16',Chan = 1,HPF = 1,LPF = 80,calib = 0,BPfilt=0,lineNotch = 0,fan=0):
 	#The calib flag (0 or 1) determines whether it is the raw or calibrated data that is returned.
 	
 	[basepath, analysispath] = getCompEnv();
@@ -110,7 +110,7 @@ def get1ChanData(day,runNum,noiseNum,Chan = 1,LPF = 80, HPF = 2,f120=120,f60=60,
 		ftser1 = path + '\\'+'noise_'+str(noiseNum)+'\\'+'Y_calibrated_time_series_fT_'+str(Chan)+'.bin';
 
 
-	dataTS1 = fromfile(ftser1,dtype = '<d')
+	dataTS = fromfile(ftser1,dtype = '<d')
 
 	Nyq = 500.
 	#100 Hz low pass
@@ -119,17 +119,24 @@ def get1ChanData(day,runNum,noiseNum,Chan = 1,LPF = 80, HPF = 2,f120=120,f60=60,
 	b60,a60 = butter(4,[59./Nyq,61./Nyq],btype='bandstop');
 	bfan,afan = butter(2,[4./Nyq,5./Nyq],btype='bandstop');
 
-	dataTSf1 = filtfilt(bLP,aLP,dataTS1);
+	if BPfilt==1:
+		dataTSf = filtfilt(bLP,aLP,dataTS);
+	else:
+		dataTSf=dataTS
 	
 	if lineNotch==1:
-		dataTSf1 = filtfilt(b120,a120,dataTSf1);
-		dataTSf1 = filtfilt(b60,a60,dataTSf1);
+		dataTSf = filtfilt(b120,a120,dataTSf);
+		dataTSf = filtfilt(b60,a60,dataTSf);
+	else:
+		dataTSf=dataTS
 
 	if fan==1:
-		dataTSf1 = filtfilt(bfan,afan,dataTSf1)
+		dataTSf = filtfilt(bfan,afan,dataTSf)
+	else:
+		dataTSf=dataTS
 
-
-	return [dataTS1,dataTSf1]
+	
+	return [dataTS,dataTSf]
 		 
     
 def plotVPSD(day='2016.10.01',run='00',noise='00',Chan = 1, bs = 1,logplot = 1, fmax = 100, tracelabel = '',scale=1):
@@ -254,17 +261,18 @@ def Fluxgate(day='2016.10.01',run='00',noise='00',Chan = 1, bs = 1,direc='x',log
 	
 	return [time,B,freq,Px]
 	
-def CoilNoise(day='2016.10.01',runNum='00',noiseNum='00',bs=1,Chan=1,calib=0,SRScalib=5E-6,dBdI=43E9,fmax=100,label=''):
-		
-	Vt = get1ChanData(day,runNum,noiseNum,Chan=Chan,calib=0); #Imports raw voltage time-series V(t) from specified file
+def CoilNoise(day='2016.10.01',runNum='00',noiseNum='00',ver='v16',bs=1,Chan=1,calib=0,SRScalib=5E-6,dBdI=4.3E10,fmax=100,Range=[1E-12,1E-6],label=''):
+	'''Plots PSDs of voltage recorded when FPGA AIs are connected to Coil Driver outputs. Range is in A/rHz, the field will scale accordingly.'''
+	Vt = get1ChanData(day,runNum,noiseNum,ver = 'v16',Chan=Chan,calib = 0,BPfilt=0,lineNotch = 0,fan=0)	#Imports raw voltage time-series V(t) from specified file
 	sz = size(Vt[0]);
 	Vxx,freq = mlab.psd(Vt[0],NFFT = sz,Fs = 1000.); #Creates the power spectrum in V^2/Hz
 	Vx = sqrt(Vxx); #computes psd in V/rHz
 
-	freq = binit(freq,bs); Vx = binit(Vx,bs); #bins frequency and psd
+	if bs>1:
+		freq = binit(freq,bs); Vx = binit(Vx,bs); #bins frequency and psd
 	
 	Ix=Vx*SRScalib; #Converts the voltage psd to a current psd
-	Bx=Ix*dBdI; #converts to magnetic field psd [fT/rHz] given the coil calibration dB/dI
+	Bx=Ix*dBdI; #converts to magnetic field psd [fT/rHz] given the coil calibration dB/dI in [fT/A]
 	
 	matplotlib.rcParams['figure.figsize'] = (12.0,9.0)
 	
@@ -280,7 +288,7 @@ def CoilNoise(day='2016.10.01',runNum='00',noiseNum='00',bs=1,Chan=1,calib=0,SRS
 	grid('on',which='both')
 	ylabel('Current PSD [A/rHz]');
 	xlim(xmax=fmax);
-	ylim(ymax=10*max(Ix));
+	ylim(ymin=Range[0],ymax=Range[1]);
 	legend();
 	
 	#plots magnetic field psd
@@ -289,7 +297,7 @@ def CoilNoise(day='2016.10.01',runNum='00',noiseNum='00',bs=1,Chan=1,calib=0,SRS
 	grid('on',which='both');
 	xlabel('Frequency [Hz]'); ylabel('Mag. Field PSD [fT/rHz]');
 	xlim(xmax=fmax);
-	ylim(ymax=10*max(Bx));
+	ylim(ymin=Range[0]*dBdI,ymax=Range[1]*dBdI);
 	legend();
 
 def NullFields(x=0,y=0,z=0,Rx=1000,Ry=1000,Rz=1000,Supply='Sulai',Coils='Shell'):
