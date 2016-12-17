@@ -80,10 +80,10 @@ def getCurrentNoise(day, run, noiseSum,noisediff,calibSum,calibDiff,Chan = 3):
     ylabel('CMRR, dB');
     legend(loc=3)
     
-def get1ChanData(day,runNum,noiseNum,ver = 'v16',Chan = 1,HPF = 1,LPF = 80,calib = 0,BPfilt=0,lineNotch = 0,fan=0):
+def get1ChanData(loc='WIMR',day='2016.12.01',runNum='00',noiseNum='00',ver = 'v16',Chan = 1,HPF = 1,LPF = 80,calib = 0,BPfilt=0,lineNotch = 0,fan=0):
 	#The calib flag (0 or 1) determines whether it is the raw or calibrated data that is returned.
 	
-	[basepath, analysispath] = getCompEnv();
+	[basepath, analysispath] = getCompEnv(loc);
 	basepath = basepath + ver + '\\';
 	dayDir = analysispath+day
 
@@ -261,9 +261,9 @@ def Fluxgate(day='2016.10.01',run='00',noise='00',Chan = 1, bs = 1,direc='x',log
 	
 	return [time,B,freq,Px]
 	
-def CoilNoise(day='2016.10.01',runNum='00',noiseNum='00',ver='v16',bs=1,Chan=1,calib=0,SRScalib=5E-6,dBdI=4.3E10,fmax=100,Range=[1E-12,1E-6],label=''):
+def CoilNoise(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',ver='v16',bs=1,Chan=1,calib=0,SRScalib=5E-6,dBdI=4.3E10,fmax=100,Range=[1E-12,1E-6],label=''):
 	'''Plots PSDs of voltage recorded when FPGA AIs are connected to Coil Driver outputs. Range is in A/rHz, the field will scale accordingly.'''
-	Vt = get1ChanData(day,runNum,noiseNum,ver = 'v16',Chan=Chan,calib = 0,BPfilt=0,lineNotch = 0,fan=0)	#Imports raw voltage time-series V(t) from specified file
+	Vt = get1ChanData(loc,day,runNum,noiseNum,ver = 'v16',Chan=Chan,calib = 0,BPfilt=0,lineNotch = 0,fan=0)	#Imports raw voltage time-series V(t) from specified file
 	sz = size(Vt[0]);
 	Vxx,freq = mlab.psd(Vt[0],NFFT = sz,Fs = 1000.); #Creates the power spectrum in V^2/Hz
 	Vx = sqrt(Vxx); #computes psd in V/rHz
