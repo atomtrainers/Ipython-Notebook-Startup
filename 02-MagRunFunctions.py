@@ -58,6 +58,18 @@ def MagRunHelp():
 	print("")
 	print(f8);
 
+def GoogleDrive():
+	cname = os.getenv('computername');
+	
+	if cname=='RAMSESE-II':
+		g_path='C:\\Google Drive\\'
+	elif cname=='THADLABS':
+		g_path='D:\\Google Drive\\'
+	elif cname=='BIOMAG2' or cname=='SEOP':
+		g_path='E:\\Google Drive\\'
+	
+	return g_path
+	
 def getCompEnv(datasource='WIMR'):
 	"""set the directories of the computer accordingly. Returns [basepath, and analysispath]"""
 	cname = os.getenv('computername');
