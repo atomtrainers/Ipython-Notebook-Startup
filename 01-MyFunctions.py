@@ -286,18 +286,20 @@ def CoilNoise(loc='WIMR',day='2016.10.01',runNum='00',noiseNum='00',ver='v16',bs
 	Iplot=subplot(211);
 	semilogy(freq,Ix,label=tracelabel);
 	grid('on',which='both')
-	ylabel('Current PSD [A/rHz]');
+	ylabel('Current PSD [A/rHz]',fontsize=16);
 	xlim(xmax=fmax);
 	ylim(ymin=Range[0],ymax=Range[1]);
+	xticks(fontsize=14); yticks(fontsize=14);
 	legend();
 	
 	#plots magnetic field psd
 	Bplot=subplot(212);
 	semilogy(freq,Bx)
 	grid('on',which='both');
-	xlabel('Frequency [Hz]'); ylabel('Mag. Field PSD [fT/rHz]');
+	xlabel('Frequency [Hz]',fontsize=16); ylabel('Mag. Field PSD [fT/rHz]',fontsize=16);
 	xlim(xmax=fmax);
 	ylim(ymin=Range[0]*dBdI,ymax=Range[1]*dBdI);
+	xticks(fontsize=14); yticks(fontsize=14);
 	legend();
 
 def NullFields(x=0,y=0,z=0,Rx=1000,Ry=1000,Rz=1000,Supply='Sulai',Coils='Shell'):
